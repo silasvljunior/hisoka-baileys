@@ -16,6 +16,10 @@ import readline from "readline"
 import { parsePhoneNumber } from "libphonenumber-js"
 import open from "open"
 import path from "path"
+import mysql from "mysql2";
+import cron from "node-cron";
+import fs from "fs";
+import axios from "axios"
 
 global.api = async (name, options = {}) => new (await import("./lib/api.js")).default(name, options)
 
@@ -235,7 +239,7 @@ async function start() {
 
       if (connection === "open") {
          hisoka.sendMessage(config.options.owner[0] + "@s.whatsapp.net", {
-            text: `${hisoka?.user?.name || "Hisoka"} has Connected...`,
+            text: `${hisoka?.user?.name || "Silastor"} Estou Online papai ^^...`,
          })
       }
    })
@@ -248,6 +252,7 @@ async function start() {
       if (!message.messages) return
       const m = await Serialize(hisoka, message.messages[0])
       await (await import(`./event/message.js?v=${Date.now()}`)).default(hisoka, m, message)
+  
    })
 
    // group participants update
@@ -266,7 +271,7 @@ async function start() {
          for (const id of json) {
             if (id.status === "offer") {
                let msg = await hisoka.sendMessage(id.from, {
-                  text: `Maaf untuk saat ini, Kami tidak dapat menerima panggilan, entah dalam group atau pribadi\n\nJika Membutuhkan bantuan ataupun request fitur silahkan chat owner :p`,
+                  text: `não é permitido ligar para mim, por favor se quiser falar alguma coisa fale comigo pelo outro numero!`,
                   mentions: [id.from],
                })
                hisoka.sendContact(id.from, config.options.owner, msg)
@@ -281,6 +286,289 @@ async function start() {
       if (global.db) await database.write(global.db)
    }, 30000) // write database every 30 seconds
 
+   // Configurações de conexão com o banco de dados
+   const pool = mysql.createPool({
+      host: '172.93.110.42',
+      user: 'u3251_1K8AUDfZ1X',
+      password: 'RBAy0i4f1NsLj+b^Uho=@FVF',
+      database: 's3251_projetos',
+      waitForConnections: true,
+      connectionLimit: 10,
+      queueLimit: 0
+  });
+  // Função para enviar mensagem
+function enviarMensagem() {
+      pool.getConnection((err, connection) => {
+          if (err) {
+              console.error('Erro ao conectar ao banco de dados:', err);
+              return;
+          }
+  
+          connection.query('SELECT * FROM reflexoes WHERE data_adicao < CURDATE() ORDER BY data_adicao DESC LIMIT 1', async (error, rows) => {
+              if (error) {
+                  console.error('Erro ao buscar última mensagem:', error);
+                  connection.release();
+                  return;
+              }
+  
+              if (rows.length === 0) {
+                  connection.query('SELECT * FROM reflexoes ORDER BY RAND() LIMIT 1', async (error, rows) => {
+                      if (error) {
+                          console.error('Erro ao buscar reflexão aleatória:', error);
+                          connection.release();
+                          return;
+                      }
+  
+                      if (rows.length > 0) {
+                          const lastMessage = rows[0];
+                          const text = `
+  📖 Referência: ${lastMessage.referencia_biblica}
+  🌟 Reflexão: ${lastMessage.texto_reflexivo}
+  🌍 Contexto: ${lastMessage.contexto}
+  ✍️ Autor: ${lastMessage.autor}
+  `;
+  
+                          hisoka.sendMessage('554497433716@c.us', {
+                              text,
+                              contextInfo: {
+                                  mentionedJid: hisoka.parseMention(text),
+                                  externalAdReply: {
+                                      title: "Reflexão Diária",
+                                      mediaType: 1,
+                                      previewType: 0,
+                                      renderLargerThumbnail: true,
+                                      thumbnail: fs.readFileSync("./temp/tomioka.jpg"),
+                                      sourceUrl: config.Exif.packWebsite
+                                  }
+                              }
+                          });
+                      } else {
+                          console.log('Nenhuma mensagem encontrada na tabela.');
+                      }
+                  });
+              } else {
+                  const lastMessage = rows[0];
+                  const text = `
+  📖 Referência: ${lastMessage.referencia_biblica}
+  🌟 Reflexão: ${lastMessage.texto_reflexivo}
+  🌍 Contexto: ${lastMessage.contexto}
+  ✍️ Autor: ${lastMessage.autor}
+  `;
+  
+                  hisoka.sendMessage('554497433716@c.us', {
+                      text,
+                      contextInfo: {
+                          mentionedJid: hisoka.parseMention(text),
+                          externalAdReply: {
+                              title: "Reflexão Diária",
+                              mediaType: 1,
+                              previewType: 0,
+                              renderLargerThumbnail: true,
+                              thumbnail: fs.readFileSync("./temp/tomioka.jpg"),
+                              sourceUrl: config.Exif.packWebsite
+                          }
+              }});
+              }
+  
+              connection.release();
+          });
+      });
+  }
+cron.schedule('0 8 * * *', () => {
+enviarMensagem()
+});
+
+// Função para verificar a existência de um arquivo na URL especificada
+async function verificarExistenciaArquivo(url) {
+   try {
+       const response = await axios.head(url);
+       return [response.status === 200];
+   } catch (error) {
+       return [false];
+   }
+ }
+ async function enviarMensagemComMidia(numeroTelefone, mensagem, urlImagem = null, urlVideo = null) {
+   try {
+  
+     // Verifica se a imagem existe
+     if (urlImagem) {
+      hisoka.sendMessage(numeroTelefone, {image: {url: urlImagem } , fileName: "ari_senapi", mimetype: 'image/jpeg', caption: mensagem})
+     }
+ 
+     // Verifica se o vídeo existe
+     if (urlVideo) {
+      await sock.sendMessage(numeroTelefone,{video: urlVideo,caption: mensagem})
+      
+     }
+ 
+     // Se não houver imagem ou vídeo, envia apenas a mensagem
+     if (!urlImagem && !urlVideo) {
+       await hisoka.sendMessage(numeroTelefone, { text: mensagem });
+     }
+   } catch (error) {
+      console.error("Erro ao enviar mensagem com mídia:", error);
+    }
+  }
+  
+// Função para enviar uma mensagem diária específica
+async function enviarMensagemDiaria() {
+   try {
+     // Obtém uma conexão do pool
+     const connection = await new Promise((resolve, reject) => {
+       pool.getConnection((err, connection) => {
+         if (err) {
+           reject(err);
+         } else {
+           resolve(connection);
+         }
+       });
+     });
+ 
+     try {
+       // Consulta uma mensagem aleatória da tabela mensagens_diarias
+       connection.query(
+         "SELECT id, mensagem FROM mensagens_diarias ORDER BY RAND() LIMIT 1",
+         async (error, results) => {
+           if (error) {
+             console.error("Erro ao executar a consulta:", error);
+             connection.release();
+             return;
+           }
+ 
+           // Verifica se há resultados na consulta
+           if (results.length > 0) {
+             const { id, mensagem } = results[0];
+ 
+             // Consulta todos os números de telefone dos usuários
+             connection.query("SELECT telefone FROM users", async (error, telefoneResults) => {
+               if (error) {
+                 console.error("Erro ao recuperar números de telefone:", error);
+                 connection.release();
+                 return;
+               }
+ 
+           // Envia a mensagem para cada número de telefone válido
+for (const telefone of telefoneResults) {
+   if (telefone.telefone !== null) {
+     const numeroTelefone = telefone.telefone + "@s.whatsapp.net";
+ 
+     // Verifica a existência da imagem e do vídeo
+     const urlImagem = `http://silasjr.bed.ovh/adm/uploads/${id}.png`;
+     const urlVideo = `http://silasjr.bed.ovh/adm/uploads/${id}.mp4`;
+     const imagemExiste = await verificarExistenciaArquivo(urlImagem);
+     const videoExiste = await verificarExistenciaArquivo(urlVideo);
+ 
+     // Envia a mensagem com imagem e/ou vídeo (se existirem)
+     await enviarMensagemComMidia(
+       numeroTelefone,
+       mensagem,
+       imagemExiste[0] ? urlImagem : null,
+       videoExiste[0] ? urlVideo : null
+     );
+ 
+     // Adiciona um tempo de pausa de 4 segundos (4000 milissegundos)
+     await new Promise((resolve) => setTimeout(resolve, 4000));
+   }
+ }
+ 
+ 
+               connection.release();
+             });
+           }
+         }
+       );
+     } catch (error) {
+       console.error("Erro ao enviar mensagem diária:", error);
+     }
+   } catch (error) {
+     console.error("Erro ao enviar mensagem diária:", error);
+   }
+ }
+
+// await sendFile('5544997433716@s.whatsapp.net', "http://silasjr.bed.ovh/adm/uploads/1.png", 'tt.png', "te")
+//await hisoka.sendMessage('5544997433716@s.whatsapp.net', {image: {url: "http://silasjr.bed.ovh/adm/uploads/1.png" } , fileName: "aaaa", mimetype: 'image/jpeg', caption: "mensagem"})
+ // Define os horários específicos
+ const horarios = [
+   { hora: 9, minuto: 59, segundo: 0},
+   { hora: 15, minuto: 0, segundo: 0},
+   { hora: 21, minuto: 0, segundo: 0},
+ ];
+ 
+ // Função para calcular o tempo até o próximo horário de envio
+ function calcularTempoParaEnvio(horario) {
+   const agora = new Date();
+   const horaAtual = agora.getHours();
+   const minutoAtual = agora.getMinutes();
+   const segundoAtual = agora.getSeconds();
+ 
+   // Calcula o tempo até o próximo horário de envio
+   let tempoParaEnvio;
+   const proximoHorario = new Date(agora);
+   proximoHorario.setHours(horario.hora, horario.minuto, horario.segundo, 0); // Define o próximo horário do dia
+ 
+   // Se o horário já passou hoje, passa para o próximo dia
+   if (agora >= proximoHorario) {
+     proximoHorario.setDate(proximoHorario.getDate() + 1);
+   }
+ 
+   tempoParaEnvio = proximoHorario - agora; // Calcula o tempo até o próximo horário
+ 
+   return tempoParaEnvio;
+ }
+ 
+ // Função para agendar o envio de mensagens nos horários especificados
+ function agendarEnvioMensagensDiarias() {
+   for (const horario of horarios) {
+     // Calcula o tempo até o próximo horário de envio
+     const tempoParaEnvio = calcularTempoParaEnvio(horario);
+ 
+     // Função para enviar a mensagem no horário especificado
+     const enviarNoHorario = () => {
+       // Envia a mensagem
+       enviarMensagemDiaria();
+       
+       // Agendar o próximo envio diário
+       setTimeout(enviarNoHorario, 24 * 60 * 60 * 1000); // 24 horas em milissegundos
+     };
+ 
+     // Aguarda até o próximo horário de envio e então envia a mensagem
+     setTimeout(enviarNoHorario, tempoParaEnvio);
+   }
+ }
+ 
+ 
+ // Função para calcular o tempo até o próximo horário de verificação
+ function calcularTempoParaVerificacao() {
+   const agora = new Date();
+   const proximaVerificacao = new Date(agora);
+   proximaVerificacao.setHours(0, 0, 0, 0); // Define o próximo horário de verificação para 9:00 da manhã
+ 
+   // Se já passou do horário de verificação para hoje, agenda para amanhã no mesmo horário
+   if (agora >= proximaVerificacao) {
+     proximaVerificacao.setDate(proximaVerificacao.getDate() + 1);
+   }
+ 
+   return proximaVerificacao - agora; // Retorna o tempo até o próximo horário de verificação
+ }
+ 
+ // Função para agendar a verificação em um horário específico
+ function agendarVerificacao() {
+   const tempoParaVerificacao = calcularTempoParaVerificacao();
+ 
+   setTimeout(() => {
+     // Realiza a verificação de vip e envio de mensagens
+     //checkPaymentAndSendMessages();
+ 
+     // Agenda a próxima verificação
+     agendarVerificacao();
+   }, tempoParaVerificacao);
+ }
+ 
+ // Inicia a primeira verificação
+ agendarVerificacao();
+ 
+ // Inicia o envio da mensagem diariamente no horário especificado
+ agendarEnvioMensagensDiarias();
    return hisoka
 }
 

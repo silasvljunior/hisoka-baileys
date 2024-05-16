@@ -1,21 +1,256 @@
 {
   "users": {
-    "62858156631709@s.whatsapp.net": {
+    "554491177357@s.whatsapp.net": {
       "limit": 15,
-      "lastChat": 1691704594528,
+      "lastChat": 1712587143131,
       "premium": true,
       "VIP": true,
-      "name": "Saya Dika 2",
+      "name": "Silastor",
       "banned": false
     },
-    "6288292024190@s.whatsapp.net": {
+    "554497433716@s.whatsapp.net": {
       "limit": 15,
-      "lastChat": 1691704675873,
+      "lastChat": 1712587152847,
       "premium": true,
       "VIP": true,
-      "name": "Saya Dika",
+      "name": "Silas Jr",
+      "banned": false
+    },
+    "5522998968953@s.whatsapp.net": {
+      "limit": 15,
+      "lastChat": 1712589013022,
+      "premium": false,
+      "VIP": false,
+      "name": "Thiago Bento",
+      "banned": false
+    },
+    "553499310836@s.whatsapp.net": {
+      "limit": 15,
+      "lastChat": 1712662455093,
+      "premium": false,
+      "VIP": false,
+      "name": "Amanynda Kobayashi🫶🏻",
+      "banned": false
+    },
+    "5511910778014@s.whatsapp.net": {
+      "limit": 15,
+      "lastChat": 1712762718055,
+      "premium": false,
+      "VIP": false,
+      "name": "ㅤㅤ               ✧",
+      "banned": false
+    },
+    "5511932926980@s.whatsapp.net": {
+      "limit": 15,
+      "lastChat": 1712762722190,
+      "premium": false,
+      "VIP": false,
+      "name": "jss",
+      "banned": false
+    },
+    "5511941539411@s.whatsapp.net": {
+      "limit": 15,
+      "lastChat": 1712762722797,
+      "premium": false,
+      "VIP": false,
+      "name": "ISA🎀",
+      "banned": false
+    },
+    "5511964580114@s.whatsapp.net": {
+      "limit": 15,
+      "lastChat": 1712762728224,
+      "premium": false,
+      "VIP": false,
+      "name": "WENDYY★",
+      "banned": false
+    },
+    "554199765106@s.whatsapp.net": {
+      "limit": 15,
+      "lastChat": 1713293649789,
+      "premium": false,
+      "VIP": false,
+      "name": "༺ღ༒ 𝐈𝐳𝐮𝐤𝐨 𝐌𝐢𝐝𝐨𝐫𝐢𝐲𝐚 ༒ღ༻",
+      "banned": false
+    },
+    "555599429831@s.whatsapp.net": {
+      "limit": 15,
+      "lastChat": 1713533525293,
+      "premium": false,
+      "VIP": false,
+      "name": "𝑳𝒆𝒗𝒊_𝑨𝒄𝒌𝒆𝒓𝒎𝒆𝒏",
+      "banned": false
+    },
+    "557196584443@s.whatsapp.net": {
+      "limit": 15,
+      "lastChat": 1713533528826,
+      "premium": false,
+      "VIP": false,
+      "name": "Lucas Kauã",
+      "banned": false
+    },
+    "5511916807415@s.whatsapp.net": {
+      "limit": 15,
+      "lastChat": 1713533728461,
+      "premium": false,
+      "VIP": false,
+      "name": "ʳᵏ⃟⃤𝖆𝖓𝖏𝖎𝖓𝖍𝖆ꪶ🥋ꫂᵗᵗᶻꪶ͢🇰🇷⃟⃤",
+      "banned": false
+    },
+    "5519971238868@s.whatsapp.net": {
+      "limit": 15,
+      "lastChat": 1713534837631,
+      "premium": false,
+      "VIP": false,
+      "name": ":þ",
+      "banned": false
+    },
+    "558182758146@s.whatsapp.net": {
+      "limit": 15,
+      "lastChat": 1713535815879,
+      "premium": false,
+      "VIP": false,
+      "name": "José",
+      "banned": false
+    },
+    "5511970136063@s.whatsapp.net": {
+      "limit": 15,
+      "lastChat": 1713537275838,
+      "premium": false,
+      "VIP": false,
+      "name": "gio!!",
+      "banned": false
+    },
+    "5511934589030@s.whatsapp.net": {
+      "limit": 15,
+      "lastChat": 1713538455797,
+      "premium": false,
+      "VIP": false,
+      "name": "BORGATTØ",
+      "banned": false
+    },
+    "5517992685141@s.whatsapp.net": {
+      "limit": 15,
+      "lastChat": 1713538905951,
+      "premium": false,
+      "VIP": false,
+      "name": "𒅒Kauê.lxx𒅒",
+      "banned": false
+    },
+    "5517996443281@s.whatsapp.net": {
+      "limit": 15,
+      "lastChat": 1713540708888,
+      "premium": false,
+      "VIP": false,
+      "name": "Breno M",
+      "banned": false
+    },
+    "554499688795@s.whatsapp.net": {
+      "limit": 15,
+      "lastChat": 1713540745382,
+      "premium": false,
+      "VIP": false,
+      "name": "𝓐𝓷𝓪🌷🖤",
+      "banned": false
+    },
+    "5522988175732@s.whatsapp.net": {
+      "limit": 15,
+      "lastChat": 1713540769207,
+      "premium": false,
+      "VIP": false,
+      "name": ".",
+      "banned": false
+    },
+    "556798485736@s.whatsapp.net": {
+      "limit": 15,
+      "lastChat": 1714934372053,
+      "premium": false,
+      "VIP": false,
+      "name": "Le Saphir",
+      "banned": false
+    },
+    "5519984182300@s.whatsapp.net": {
+      "limit": 15,
+      "lastChat": 1714934765572,
+      "premium": false,
+      "VIP": false,
+      "name": "ミイ⏤͟͟͞͞🔘",
+      "banned": false
+    },
+    "555189516653@s.whatsapp.net": {
+      "limit": 15,
+      "lastChat": 1715026365943,
+      "premium": false,
+      "VIP": false,
+      "name": "Kazumi",
+      "banned": false
+    },
+    "556492809548@s.whatsapp.net": {
+      "limit": 15,
+      "lastChat": 1715026396623,
+      "premium": false,
+      "VIP": false,
+      "name": "Ana",
+      "banned": false
+    },
+    "555599604516@s.whatsapp.net": {
+      "limit": 15,
+      "lastChat": 1715029224398,
+      "premium": false,
+      "VIP": false,
+      "name": "Higan",
+      "banned": false
+    },
+    "555195847603@s.whatsapp.net": {
+      "limit": 15,
+      "lastChat": 1715378498930,
+      "premium": false,
+      "VIP": false,
+      "name": "Malu",
       "banned": false
     }
   },
-  "groups": {}
+  "groups": {
+    "120363281018194095@g.us": {
+      "lastChat": 1712589013022,
+      "mute": false,
+      "welcome": true,
+      "leave": true
+    },
+    "120363023849383476@g.us": {
+      "lastChat": 1712661941444,
+      "mute": false,
+      "welcome": true,
+      "leave": true
+    },
+    "120363164495393361@g.us": {
+      "lastChat": 1712687954507,
+      "mute": false,
+      "welcome": true,
+      "leave": true
+    },
+    "120363262278166179@g.us": {
+      "lastChat": 1712762718055,
+      "mute": false,
+      "welcome": true,
+      "leave": true
+    },
+    "120363210637236297@g.us": {
+      "lastChat": 1714443306634,
+      "mute": false,
+      "welcome": true,
+      "leave": true
+    },
+    "120363272311272270@g.us": {
+      "lastChat": 1714933947726,
+      "mute": false,
+      "welcome": true,
+      "leave": true
+    },
+    "120363297096097851@g.us": {
+      "lastChat": 1715378023880,
+      "mute": false,
+      "welcome": true,
+      "leave": true
+    }
+  }
 }

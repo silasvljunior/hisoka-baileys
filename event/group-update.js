@@ -13,31 +13,9 @@ export default async function GroupUpdate(hisoka, update) {
 
          // action
          if (action.announce) {
-            hisoka.sendMessage(action.id, {
-               text: `Group has been Closed`, contextInfo: {
-                  externalAdReply: {
-                     title: `Closed`,
-                     mediaType: 1,
-                     previewType: 0,
-                     renderLargerThumbnail: true,
-                     thumbnailUrl: profile,
-                     sourceUrl: config.Exif.packWebsite
-                  }
-               }
-            })
+      
          } else if (!action.announce) {
-            hisoka.sendMessage(action.id, {
-               text: `Group is opened`, contextInfo: {
-                  externalAdReply: {
-                     title: `Open`,
-                     mediaType: 1,
-                     previewType: 0,
-                     renderLargerThumbnail: true,
-                     thumbnailUrl: profile,
-                     sourceUrl: config.Exif.packWebsite
-                  }
-               }
-            })
+     
          }
       }
    } catch (e) {

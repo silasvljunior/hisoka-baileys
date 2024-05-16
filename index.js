@@ -42,5 +42,5 @@ function start(file) {
       })
    })
 }
-
+    		 
 start("hisoka.js")
